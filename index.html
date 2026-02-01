@@ -17,6 +17,7 @@
         height: 100vh;
         text-align: center;
         color: #fff;
+        overflow: hidden;
     }
 
     h1 {
@@ -60,14 +61,14 @@
     }
 
     img {
-        width: 200px;
+        width: 250px;
         height: auto;
     }
 </style>
 </head>
 <body>
     <h1>Will you be my Valentine, Param? 💌</h1>
-    <div class="button-container">
+    <div class="button-container" id="buttons">
         <button id="yesBtn">Yes 💖</button>
         <button id="noBtn">No 😢</button>
     </div>
@@ -77,7 +78,9 @@
     const noBtn = document.getElementById('noBtn');
     const yesBtn = document.getElementById('yesBtn');
     const gifContainer = document.getElementById('gifContainer');
+    const buttonsDiv = document.getElementById('buttons');
 
+    // Make the "No" button run away
     noBtn.addEventListener('mouseenter', () => {
         const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
         const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
@@ -86,9 +89,11 @@
         noBtn.style.top = y + 'px';
     });
 
+    // Clicking "Yes" shows GIF and hides buttons
     yesBtn.addEventListener('click', () => {
-        gifContainer.innerHTML = '<img src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif" alt="Bunny Kiss">';
-        alert('Yay! 💖 You said Yes!');
+        buttonsDiv.style.display = 'none'; // hide buttons
+        gifContainer.innerHTML = '<img src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif" alt="Kitten Kiss">';
+        document.querySelector('h1').textContent = "Yay! 💖 I'm yours!";
     });
 </script>
 </body>
