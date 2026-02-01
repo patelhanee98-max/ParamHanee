@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Will You Be My Valentine Param?</title>
+  <title>Will You Be My Valentine?</title>
   <style>
     /* General Styling */
     body {
@@ -35,7 +35,6 @@
       border-radius: 12px;
       cursor: pointer;
       transition: all 0.3s ease;
-      margin: 20px;
       box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     }
 
@@ -96,11 +95,22 @@
       0% { transform: translateY(0) rotate(45deg); opacity:1; }
       100% { transform: translateY(-1000px) rotate(45deg); opacity:0; }
     }
+
+    /* Button container to keep spacing */
+    .button-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 150px;
+      position: relative;
+      width: 100%;
+    }
+
   </style>
 </head>
 <body>
   <h1>Will You Be My Valentine?</h1>
-  <div>
+  <div class="button-container">
     <button id="yesBtn" class="btn">Yes</button>
     <button id="noBtn" class="btn">No</button>
   </div>
@@ -113,8 +123,17 @@
 
     // Make the No button dodge the mouse
     noBtn.addEventListener('mouseenter', () => {
-      const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-      const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+      const yesRect = yesBtn.getBoundingClientRect();
+      let x, y;
+      do {
+        x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+        y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+      } while (
+        x + noBtn.offsetWidth > yesRect.left &&
+        x < yesRect.right &&
+        y + noBtn.offsetHeight > yesRect.top &&
+        y < yesRect.bottom
+      );
       noBtn.style.position = 'absolute';
       noBtn.style.left = x + 'px';
       noBtn.style.top = y + 'px';
