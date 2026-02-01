@@ -3,201 +3,222 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Valentine Surprise 💖</title>
+<title>Valentine Live Chat 💖</title>
 <style>
-/* --- Body & background --- */
-body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Dancing Script', cursive;
-    background: radial-gradient(circle at bottom, #0b0033, #1a0033);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    overflow: hidden;
-    color: #fff;
-    text-align: center;
+body{
+  margin:0;padding:0;font-family:'Dancing Script',cursive;
+  background:radial-gradient(circle at bottom,#0b0033,#1a0033);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  height:100vh;overflow:hidden;color:#fff;text-align:center;
+}
+.star{position:absolute;background:white;border-radius:50%;opacity:0.8;animation:twinkle linear infinite;}
+@keyframes twinkle{0%,100%{opacity:0.3;}50%{opacity:1;}}
+h1,h2{margin-bottom:40px;font-weight:700;font-size:3em;text-shadow:0 0 15px #ff69b4,0 0 30px #ff1493;}
+button{padding:15px 40px;font-size:1.2em;border:none;border-radius:30px;cursor:pointer;margin:5px;font-weight:bold;transition:0.3s all ease;
+box-shadow:0 0 15px rgba(255,255,255,0.5);background:linear-gradient(45deg,#ff69b4,#ff1493);color:#fff;}
+button#noBtn{background:linear-gradient(45deg,#fff,#ddd);color:#ff1493;border:2px solid #ff1493;}
+button:hover{transform:scale(1.1);}
+.page{display:none;flex-direction:column;align-items:center;justify-content:center;height:100vh;}
+.active{display:flex;}
+#gifContainer{margin-top:30px;border-radius:15px;overflow:hidden;box-shadow:0 0 30px rgba(255,20,147,0.5);}
+#finalText{font-size:4em;font-weight:700;color:#ff1493;text-shadow:0 0 20px #fff,0 0 40px #ff69b4;animation:heartbeat 1s infinite;}
+@keyframes heartbeat{0%,100%{transform:scale(1);}50%{transform:scale(1.1);}}
+.confetti{position:absolute;width:10px;height:10px;border-radius:50%;animation:confettiFall linear forwards;}
+@keyframes confettiFall{to{transform:translateY(100vh) rotate(360deg);opacity:0;}}
+.heart{position:absolute;font-size:20px;animation:fall 5s linear forwards;}
+@keyframes fall{to{transform:translateY(100vh);opacity:0;}}
+
+/* LAYOUT for messages + chat */
+#contentWrapper{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items:flex-start;
+  gap:30px;
+  margin-top:20px;
+}
+#messagesContainer, #chatContainer{
+  flex:1 1 320px;
+  max-width:400px;
 }
 
-/* --- Starry night effect --- */
-.star {
-    position: absolute;
-    background: white;
-    border-radius: 50%;
-    opacity: 0.8;
-    animation: twinkle linear infinite;
+/* message box */
+#messagesContainer{
+  background:rgba(255,20,147,0.15);
+  padding:30px;
+  border-radius:20px;
+  box-shadow:0 0 30px rgba(255,20,147,0.3);
 }
+#loveMessage{font-size:1.8em;font-weight:600;color:#ff69b4;text-shadow:0 0 10px #ff1493;margin-bottom:30px;}
 
-@keyframes twinkle {
-    0%,100%{opacity:0.3;}
-    50%{opacity:1;}
+/* chat box */
+#chatContainer{
+  background:rgba(255,20,147,0.1);
+  padding:20px;
+  border-radius:15px;
+  box-shadow:0 0 20px rgba(255,20,147,0.3);
 }
-
-/* --- Titles --- */
-h1, h2 {
-    margin-bottom: 40px;
-    font-weight: 700;
-    font-size: 3em;
-    text-shadow: 0 0 15px #ff69b4, 0 0 30px #ff1493;
-}
-
-/* --- Buttons --- */
-button {
-    padding: 15px 40px;
-    font-size: 1.4em;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    margin: 0 20px;
-    font-weight: bold;
-    transition: 0.3s all ease;
-    box-shadow: 0 0 15px rgba(255,255,255,0.5);
-    background: linear-gradient(45deg,#ff69b4,#ff1493);
-    color:#fff;
-}
-
-button#noBtn {
-    background: linear-gradient(45deg,#fff,#ddd);
-    color:#ff1493;
-    border:2px solid #ff1493;
-}
-
-button:hover { transform: scale(1.1); }
-
-/* --- Pages --- */
-.page { display: none; flex-direction: column; align-items: center; justify-content: center; height: 100vh; }
-.active { display: flex; }
-
-/* --- GIF container --- */
-#gifContainer {
-    margin-top:30px;
-    border-radius:15px;
-    overflow:hidden;
-    box-shadow:0 0 30px rgba(255,20,147,0.5);
-}
-
-/* --- Messages container --- */
-#messagesContainer {
-    background: rgba(255,20,147,0.15);
-    padding: 30px 50px;
-    border-radius: 20px;
-    box-shadow: 0 0 30px rgba(255,20,147,0.3);
-    margin-bottom: 30px;
-}
-
-/* --- Sweet messages --- */
-#loveMessage {
-    font-size:2em;
-    font-weight:600;
-    color:#ff69b4;
-    text-shadow:0 0 10px #ff1493;
-    margin-bottom:30px;
-}
-
-/* --- Final text --- */
-#finalText {
-    font-size:4em;
-    font-weight:700;
-    color:#ff1493;
-    text-shadow: 0 0 20px #fff, 0 0 40px #ff69b4;
-}
+#chatMessages{height:250px;overflow-y:auto;margin-bottom:10px;}
+#chatInput{width:70%;padding:5px;border-radius:10px;border:none;}
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<!-- Landing Page -->
+<!-- PAGE 1 -->
 <div id="page1" class="page active">
-    <h1>Will you be my Valentine, Param? 💌</h1>
-    <div class="button-container" id="buttons">
-        <button id="yesBtn">Yes 💖</button>
-        <button id="noBtn">No 😢</button>
-    </div>
-    <div id="gifContainer"></div>
+  <h1>Will you be my Valentine, Param? 💌</h1>
+  <div id="buttons">
+    <button id="yesBtn">Yes 💖</button>
+    <button id="noBtn">No 😢</button>
+  </div>
+  <div id="gifContainer"></div>
 </div>
 
-<!-- Sweet Messages Section -->
+<!-- PAGE 2 -->
 <div id="page2" class="page">
-    <h2>Sweet Messages 💌</h2>
+  <h2>Sweet Messages 💌 & Live Chat 💬</h2>
+
+  <div id="contentWrapper">
+    <!-- Sweet Messages -->
     <div id="messagesContainer">
-        <p id="loveMessage">You make my heart melt! 💖</p>
+      <p id="loveMessage">You make my heart melt! 💖</p>
+      <button onclick="showRandomMessage()">Another 💖</button>
+      <button onclick="nextPage(3)">Final Surprise 🎆</button>
     </div>
-    <div class="button-container">
-        <button onclick="showRandomMessage()">Another 💖</button>
-        <button onclick="nextPage(3)">Final Surprise 🎆</button>
+
+    <!-- Chat -->
+    <div id="chatContainer">
+      <div style="margin-bottom:10px;">
+        <input id="userName" placeholder="Enter your name..." style="padding:5px;border-radius:8px;">
+        <button onclick="setName()">Join 💌</button>
+      </div>
+      <div id="chatMessages"></div>
+      <input type="text" id="chatInput" placeholder="Type your message...">
+      <button onclick="sendMessage()">Send 💌</button>
+      <button onclick="eraseChat()" style="background:#ff1493;">Erase Chat 💨</button>
     </div>
+  </div>
 </div>
 
-<!-- Final Page -->
+<!-- PAGE 3 -->
 <div id="page3" class="page">
-    <h1 id="finalText">I LOVE YOU, PARAM 💖</h1>
-    <p>🎆 Celebrate our love under the stars! 🎆</p>
+  <h1 id="finalText">I LOVE YOU, PARAM 💖</h1>
+  <p>🎆 Celebrate our love under the stars! 🎆</p>
 </div>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
 <script>
-// --- Generate stars ---
+// ====== YOUR FIREBASE CONFIG HERE ======
+const firebaseConfig = {
+  apiKey: "AIzaSyAmmXsLir3AiXRkwibiCCHhipo9lMyEvjo",
+  authDomain: "valentine-e6457.firebaseapp.com",
+  databaseURL: "https://valentine-e6457-default-rtdb.firebaseio.com",
+  projectId: "valentine-e6457",
+  storageBucket: "valentine-e6457.firebasestorage.app",
+  messagingSenderId: "712693336531",
+  appId: "1:712693336531:web:f70acee63b49e80c9ec726",
+  measurementId: "G-DV0VN616ML"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+// =======================================
+
+// stars
 for(let i=0;i<100;i++){
-    const star=document.createElement('div');
-    star.classList.add('star');
-    star.style.width=star.style.height=(Math.random()*3+1)+'px';
-    star.style.top=Math.random()*100+'%';
-    star.style.left=Math.random()*100+'%';
-    star.style.animationDuration=(2+Math.random()*3)+'s';
-    document.body.appendChild(star);
+  const s=document.createElement('div');
+  s.classList.add('star');
+  s.style.width=s.style.height=(Math.random()*3+1)+'px';
+  s.style.top=Math.random()*100+'%';
+  s.style.left=Math.random()*100+'%';
+  s.style.animationDuration=(2+Math.random()*3)+'s';
+  document.body.appendChild(s);
 }
 
-// --- No button dodges ---
+// no button dodge
 const noBtn=document.getElementById('noBtn');
 noBtn.addEventListener('mouseenter',()=>{
-    const x=Math.random()*(window.innerWidth-noBtn.offsetWidth);
-    const y=Math.random()*(window.innerHeight-noBtn.offsetHeight);
-    noBtn.style.position='absolute';
-    noBtn.style.left=x+'px';
-    noBtn.style.top=y+'px';
+  const x=Math.random()*(window.innerWidth-noBtn.offsetWidth);
+  const y=Math.random()*(window.innerHeight-noBtn.offsetHeight);
+  noBtn.style.position='absolute';
+  noBtn.style.left=x+'px';
+  noBtn.style.top=y+'px';
 });
 
-// --- Page navigation ---
-function nextPage(num){
-    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-    document.getElementById('page'+num).classList.add('active');
-    // Clean GIF container when moving to messages page
-    if(num==2){ document.getElementById('gifContainer').innerHTML=''; }
+// page navigation
+function nextPage(n){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page'+n).classList.add('active');
 }
 
-// --- Yes button click ---
-const yesBtn = document.getElementById('yesBtn');
-const gifContainer = document.getElementById('gifContainer');
-const body = document.body;
-
-yesBtn.addEventListener('click', ()=>{
-    document.getElementById('buttons').style.display='none';
-    // New cute GIF
-    gifContainer.innerHTML = `
-
-        <img src="https://media.giphy.com/media/3oz8xQQP4ahKiyuxHy/giphy.gif" 
-             alt="Cute Kitten Kiss" 
-             style="width:300px; border-radius:15px; box-shadow:0 0 30px rgba(255,20,147,0.5);">
-    `;
-    document.querySelector('#page1 h1').textContent="Yay! 💖 I'm yours!";
-    playMusic();
-    setTimeout(()=>nextPage(2),4000);
+// yes button
+document.getElementById('yesBtn').addEventListener('click',()=>{
+  document.getElementById('buttons').style.display='none';
+  document.getElementById('gifContainer').innerHTML=`<img src="https://media.giphy.com/media/3oz8xQQP4ahKiyuxHy/giphy.gif" style="width:300px;border-radius:15px;">`;
+  document.querySelector('#page1 h1').textContent="Yay! 💖 I'm yours!";
+  setTimeout(()=>nextPage(2),4000);
 });
 
-// --- Sweet messages ---
-const messages=["You make my heart melt! 💖","I love your smile! 😘","You are my everything! 🐰","Every moment with you is magical! 🌸","You complete me 💕"];
-function showRandomMessage(){
-    const msg = messages[Math.floor(Math.random()*messages.length)];
-    document.getElementById('loveMessage').textContent = msg;
-}
+// sweet messages
+const msgs=["You make my heart melt! 💖","I love your smile! 😘","You are my everything! 🐰","Every moment with you is magical! 🌸","You complete me 💕"];
+function showRandomMessage(){document.getElementById('loveMessage').textContent=msgs[Math.floor(Math.random()*msgs.length)];}
 
-// --- Music ---
-function playMusic(){
-    const audio = new Audio('https://www.bensound.com/bensound-music/bensound-romantic.mp3');
-    audio.play();
+// hearts
+function createHeart(){
+  const h=document.createElement('div');
+  h.classList.add('heart');
+  h.textContent='💖';
+  h.style.left=Math.random()*window.innerWidth+'px';
+  h.style.fontSize=(20+Math.random()*20)+'px';
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),5000);
+}
+document.getElementById('page3').addEventListener('mouseenter',()=>{
+  const i=setInterval(createHeart,300);
+  document.getElementById('page3').dataset.hint=i;
+});
+document.getElementById('page3').addEventListener('mouseleave',()=>{
+  clearInterval(document.getElementById('page3').dataset.hint);
+});
+
+// CHAT
+let currentUser="Anonymous";
+function setName(){
+  const n=document.getElementById('userName');
+  if(n.value.trim()!==""){currentUser=n.value.trim();n.disabled=true;}
+}
+const chatMessages=document.getElementById('chatMessages');
+const chatInput=document.getElementById('chatInput');
+
+function sendMessage(){
+  const text=chatInput.value.trim();
+  if(!text) return;
+  db.ref('messages').push({user:currentUser,text});
+  chatInput.value='';
+}
+db.ref('messages').on('child_added',snap=>{
+  const m=snap.val();
+  const d=document.createElement('div');
+  d.textContent=m.user+": "+m.text;
+  d.style.textAlign=(m.user===currentUser)?'right':'left';
+  d.style.margin='5px';
+  d.style.background=(m.user===currentUser)?'rgba(255,105,180,0.3)':'rgba(255,20,147,0.3)';
+  d.style.padding='5px 10px';
+  d.style.borderRadius='10px';
+  chatMessages.appendChild(d);
+  chatMessages.scrollTop=chatMessages.scrollHeight;
+});
+
+// ERASE CHAT BUTTON
+function eraseChat(){
+  if(confirm("Are you sure you want to erase all chat messages? 💔")){
+    db.ref('messages').remove();
+    chatMessages.innerHTML="";
+  }
 }
 </script>
-
 </body>
 </html>
