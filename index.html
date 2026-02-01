@@ -1,165 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Will You Be My Valentine Param?</title>
-  <style>
-    /* General Styling */
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine Surprise 💖</title>
+<style>
     body {
-      margin: 0;
-      padding: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-      overflow: hidden;
-      flex-direction: column;
-      text-align: center;
-      color: #fff;
+        margin: 0;
+        padding: 0;
+        font-family: 'Arial', sans-serif;
+        background: linear-gradient(to right, #ff9a9e, #fad0c4);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        text-align: center;
+        color: #fff;
     }
 
     h1 {
-      font-size: 3em;
-      margin-bottom: 40px;
-      text-shadow: 2px 2px 8px #ff0000;
+        font-size: 2.5em;
+        margin-bottom: 50px;
+        text-shadow: 2px 2px #ff69b4;
     }
 
-    /* Buttons */
-    .btn {
-      padding: 15px 30px;
-      font-size: 1.5em;
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    .button-container {
+        display: flex;
+        gap: 50px; /* space between buttons */
+    }
+
+    button {
+        padding: 15px 30px;
+        font-size: 1.2em;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.2);
     }
 
     #yesBtn {
-      background-color: #ff6b81;
-      color: #fff;
+        background-color: #ff69b4;
+        color: white;
     }
 
     #noBtn {
-      background-color: #fff;
-      color: #ff6b81;
+        background-color: #fff;
+        color: #ff69b4;
+        position: relative;
     }
 
     #yesBtn:hover {
-      transform: scale(1.1);
+        transform: scale(1.1);
     }
 
-    #bunnyGif {
-      display: none;
-      margin-top: 30px;
-      width: 250px;
-      border-radius: 20px;
-      box-shadow: 0 0 20px rgba(255,0,150,0.5);
+    #gifContainer {
+        margin-top: 50px;
     }
 
-    /* Hearts animation */
-    .heart {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background-color: #ff6b81;
-      transform: rotate(45deg);
-      animation: float 4s linear infinite;
-      z-index: -1;
+    img {
+        width: 200px;
+        height: auto;
     }
-
-    .heart:before,
-    .heart:after {
-      content: '';
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background-color: #ff6b81;
-      border-radius: 50%;
-    }
-
-    .heart:before {
-      top: -10px;
-      left: 0;
-    }
-
-    .heart:after {
-      left: 10px;
-      top: 0;
-    }
-
-    @keyframes float {
-      0% { transform: translateY(0) rotate(45deg); opacity:1; }
-      100% { transform: translateY(-1000px) rotate(45deg); opacity:0; }
-    }
-
-    /* Button container to keep spacing */
-    .button-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 150px;
-      position: relative;
-      width: 100%;
-    }
-
-  </style>
+</style>
 </head>
 <body>
-  <h1>Will You Be My Valentine?</h1>
-  <div class="button-container">
-    <button id="yesBtn" class="btn">Yes</button>
-    <button id="noBtn" class="btn">No</button>
-  </div>
-  <img id="bunnyGif" src="https://media.giphy.com/media/Q56ZI04r6CakM/giphy.gif" alt="Kissing Bunny">
+    <h1>Will you be my Valentine, Param? 💌</h1>
+    <div class="button-container">
+        <button id="yesBtn">Yes 💖</button>
+        <button id="noBtn">No 😢</button>
+    </div>
+    <div id="gifContainer"></div>
 
-  <script>
+<script>
     const noBtn = document.getElementById('noBtn');
     const yesBtn = document.getElementById('yesBtn');
-    const bunnyGif = document.getElementById('bunnyGif');
+    const gifContainer = document.getElementById('gifContainer');
 
-    // Make the No button dodge the mouse
     noBtn.addEventListener('mouseenter', () => {
-      const yesRect = yesBtn.getBoundingClientRect();
-      let x, y;
-      do {
-        x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-        y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
-      } while (
-        x + noBtn.offsetWidth > yesRect.left &&
-        x < yesRect.right &&
-        y + noBtn.offsetHeight > yesRect.top &&
-        y < yesRect.bottom
-      );
-      noBtn.style.position = 'absolute';
-      noBtn.style.left = x + 'px';
-      noBtn.style.top = y + 'px';
+        const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+        const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+        noBtn.style.position = 'absolute';
+        noBtn.style.left = x + 'px';
+        noBtn.style.top = y + 'px';
     });
 
-    // Show bunny gif on Yes
     yesBtn.addEventListener('click', () => {
-      bunnyGif.style.display = 'block';
-      yesBtn.disabled = true;
-      noBtn.disabled = true;
+        gifContainer.innerHTML = '<img src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif" alt="Bunny Kiss">';
+        alert('Yay! 💖 You said Yes!');
     });
-
-    // Create floating hearts
-    function createHeart() {
-      const heart = document.createElement('div');
-      heart.classList.add('heart');
-      heart.style.left = Math.random() * window.innerWidth + 'px';
-      heart.style.width = heart.style.height = Math.random() * 20 + 10 + 'px';
-      document.body.appendChild(heart);
-
-      setTimeout(() => {
-        heart.remove();
-      }, 4000);
-    }
-
-    setInterval(createHeart, 300);
-  </script>
+</script>
 </body>
 </html>
