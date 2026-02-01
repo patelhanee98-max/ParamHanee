@@ -6,24 +6,31 @@
   <title>Be My Valentine 💖</title>
   <style>
     body {
-      background-color: #ffe6eb;
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-      text-align: center;
+      background-color: #ffe6eb; /* soft pink background */
+      position: relative;
       height: 100vh;
       margin: 0;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      text-align: center;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       overflow: hidden;
+      color: #fff;
+    }
+
+    h1, .buttons, #gifContainer {
+      position: relative;
+      z-index: 1;
     }
 
     h1 {
       color: #ff3366;
       font-size: 2.5rem;
-      margin-bottom: 2rem;
-      text-shadow: 2px 2px #fff;
+      text-shadow: 2px 2px 10px rgba(255, 0, 85, 0.6);
       animation: heartbeat 1.5s infinite;
+      margin-bottom: 2rem;
     }
 
     @keyframes heartbeat {
@@ -43,12 +50,13 @@
       border-radius: 25px;
       cursor: pointer;
       transition: transform 0.3s, background-color 0.3s;
+      z-index: 1;
     }
 
     #yesBtn {
       background-color: #ff4d79;
       color: white;
-      box-shadow: 0 4px 10px rgba(255, 77, 121, 0.5);
+      box-shadow: 0 4px 10px rgba(255, 77, 121, 0.6);
     }
 
     #yesBtn:hover {
@@ -66,6 +74,7 @@
     #gifContainer {
       display: none;
       margin-top: 2rem;
+      text-shadow: 1px 1px 5px #000;
     }
 
     #gifContainer img {
@@ -74,13 +83,31 @@
       box-shadow: 0 4px 10px rgba(255, 77, 121, 0.4);
     }
 
-    /* Floating hearts background */
+    /* Hanee ❤️ Param text */
+    #coupleName {
+      font-family: 'Brush Script MT', cursive;
+      font-size: 2.5rem;
+      background: linear-gradient(90deg, #ff99cc, #ff3366);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-top: 1rem;
+      opacity: 0;
+      animation: fadeIn 2s ease forwards;
+      text-shadow: 0 0 10px rgba(255, 100, 150, 0.7);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     .heart {
       position: absolute;
       color: #ff4d79;
       font-size: 20px;
       animation: floatUp 5s linear infinite;
       opacity: 0.8;
+      z-index: 0;
     }
 
     @keyframes floatUp {
@@ -99,6 +126,7 @@
   <div id="gifContainer">
     <h2>Yay! I knew you'd say yes 😍</h2>
     <img src="https://media.giphy.com/media/3oz8xQQP4ahKiyuxHy/giphy.gif" alt="Cute Bunny Kiss">
+    <div id="coupleName">Hanee ❤️ Param</div>
   </div>
 
   <script>
@@ -106,6 +134,7 @@
     const yesBtn = document.getElementById('yesBtn');
     const gifContainer = document.getElementById('gifContainer');
 
+    // Move "No" button around
     noBtn.addEventListener('mouseover', () => {
       const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
       const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
@@ -113,6 +142,7 @@
       noBtn.style.top = `${y}px`;
     });
 
+    // Show GIF and "Hanee ❤️ Param" on "Yes"
     yesBtn.addEventListener('click', () => {
       document.querySelector('h1').style.display = 'none';
       document.querySelector('.buttons').style.display = 'none';
