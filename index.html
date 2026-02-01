@@ -5,243 +5,199 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Valentine Surprise 💖</title>
 <style>
-    /* Body and background */
-    body {
-        margin: 0;
-        padding: 0;
-        font-family: 'Comic Sans MS', cursive, sans-serif;
-        background: linear-gradient(to bottom right, #ff9a9e, #fad0c4, #ffd1dc);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        overflow: hidden;
-        cursor: url('https://i.postimg.cc/yxV7qX2V/heart-cursor.png'), auto;
-        text-align: center;
-        color: #fff;
-    }
+/* --- Body & background --- */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Dancing Script', cursive;
+    background: radial-gradient(circle at bottom, #0b0033, #1a0033);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
+    color: #fff;
+    text-align: center;
+}
 
-    h1 {
-        font-size: 3em;
-        margin-bottom: 50px;
-        text-shadow: 2px 2px 5px #ff69b4;
-        animation: fadeIn 2s ease forwards;
-    }
+/* --- Starry night effect --- */
+.star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: twinkle linear infinite;
+}
 
-    .button-container {
-        display: flex;
-        gap: 50px;
-        z-index: 10;
-    }
+@keyframes twinkle {
+    0%,100%{opacity:0.3;}
+    50%{opacity:1;}
+}
 
-    button {
-        padding: 18px 35px;
-        font-size: 1.4em;
-        border: none;
-        border-radius: 15px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: 0 8px 15px rgba(0,0,0,0.3);
-        position: relative;
-        z-index: 10;
-    }
+/* --- Titles --- */
+h1, h2 {
+    margin-bottom: 40px;
+    font-weight: 700;
+    font-size: 3em;
+    text-shadow: 0 0 15px #ff69b4, 0 0 30px #ff1493;
+}
 
-    #yesBtn {
-        background-color: #ff69b4;
-        color: white;
-    }
+/* --- Buttons --- */
+button {
+    padding: 15px 40px;
+    font-size: 1.4em;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    margin: 0 20px;
+    font-weight: bold;
+    transition: 0.3s all ease;
+    box-shadow: 0 0 15px rgba(255,255,255,0.5);
+    background: linear-gradient(45deg,#ff69b4,#ff1493);
+    color:#fff;
+}
 
-    #yesBtn:hover {
-        transform: scale(1.2) rotate(-5deg);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-    }
+button#noBtn {
+    background: linear-gradient(45deg,#fff,#ddd);
+    color:#ff1493;
+    border:2px solid #ff1493;
+}
 
-    #noBtn {
-        background-color: #fff;
-        color: #ff69b4;
-    }
+button:hover { transform: scale(1.1); }
 
-    #gifContainer {
-        margin-top: 50px;
-        z-index: 10;
-    }
+/* --- Pages --- */
+.page { display: none; flex-direction: column; align-items: center; justify-content: center; height: 100vh; }
+.active { display: flex; }
 
-    img {
-        width: 280px;
-        height: auto;
-        animation: fadeIn 1s ease forwards;
-    }
+/* --- GIF container --- */
+#gifContainer {
+    margin-top:30px;
+    border-radius:15px;
+    overflow:hidden;
+    box-shadow:0 0 30px rgba(255,20,147,0.5);
+}
 
-    /* Floating hearts and sparkles */
-    .heart, .sparkle, .rose {
-        position: absolute;
-        pointer-events: none;
-    }
+/* --- Messages container --- */
+#messagesContainer {
+    background: rgba(255,20,147,0.15);
+    padding: 30px 50px;
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(255,20,147,0.3);
+    margin-bottom: 30px;
+}
 
-    .heart {
-        font-size: 20px;
-        color: #ff69b4;
-        animation: floatUp 5s linear infinite;
-    }
+/* --- Sweet messages --- */
+#loveMessage {
+    font-size:2em;
+    font-weight:600;
+    color:#ff69b4;
+    text-shadow:0 0 10px #ff1493;
+    margin-bottom:30px;
+}
 
-    .sparkle {
-        font-size: 15px;
-        color: #fff;
-        animation: sparkleAnim 3s linear infinite;
-    }
-
-    .rose {
-        font-size: 25px;
-        animation: floatUp 6s linear infinite;
-    }
-
-    @keyframes floatUp {
-        0% { transform: translateY(0) scale(1); opacity: 1; }
-        100% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
-    }
-
-    @keyframes sparkleAnim {
-        0%, 100% { opacity: 0; transform: scale(0); }
-        50% { opacity: 1; transform: scale(1.2); }
-    }
-
-    @keyframes fadeIn {
-        from { opacity: 0; transform: scale(0.8); }
-        to { opacity: 1; transform: scale(1); }
-    }
-
-    /* Confetti */
-    .confetti {
-        position: absolute;
-        width: 10px;
-        height: 10px;
-        pointer-events: none;
-        animation: confettiFall 2s linear forwards;
-    }
-
-    @keyframes confettiFall {
-        0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-        100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
-    }
-
-    /* Optional: background glow */
-    .glow {
-        position: absolute;
-        width: 300px;
-        height: 300px;
-        background: radial-gradient(circle, rgba(255,105,180,0.5) 0%, rgba(255,105,180,0) 70%);
-        border-radius: 50%;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        pointer-events: none;
-        animation: pulse 3s infinite;
-        z-index: 0;
-    }
-
-    @keyframes pulse {
-        0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
-        50% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.8; }
-    }
+/* --- Final text --- */
+#finalText {
+    font-size:4em;
+    font-weight:700;
+    color:#ff1493;
+    text-shadow: 0 0 20px #fff, 0 0 40px #ff69b4;
+}
 </style>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="glow"></div>
+
+<!-- Landing Page -->
+<div id="page1" class="page active">
     <h1>Will you be my Valentine, Param? 💌</h1>
     <div class="button-container" id="buttons">
         <button id="yesBtn">Yes 💖</button>
         <button id="noBtn">No 😢</button>
     </div>
     <div id="gifContainer"></div>
+</div>
+
+<!-- Sweet Messages Section -->
+<div id="page2" class="page">
+    <h2>Sweet Messages 💌</h2>
+    <div id="messagesContainer">
+        <p id="loveMessage">You make my heart melt! 💖</p>
+    </div>
+    <div class="button-container">
+        <button onclick="showRandomMessage()">Another 💖</button>
+        <button onclick="nextPage(3)">Final Surprise 🎆</button>
+    </div>
+</div>
+
+<!-- Final Page -->
+<div id="page3" class="page">
+    <h1 id="finalText">I LOVE YOU, PARAM 💖</h1>
+    <p>🎆 Celebrate our love under the stars! 🎆</p>
+</div>
 
 <script>
-    const noBtn = document.getElementById('noBtn');
-    const yesBtn = document.getElementById('yesBtn');
-    const gifContainer = document.getElementById('gifContainer');
-    const buttonsDiv = document.getElementById('buttons');
-    const body = document.body;
+// --- Generate stars ---
+for(let i=0;i<100;i++){
+    const star=document.createElement('div');
+    star.classList.add('star');
+    star.style.width=star.style.height=(Math.random()*3+1)+'px';
+    star.style.top=Math.random()*100+'%';
+    star.style.left=Math.random()*100+'%';
+    star.style.animationDuration=(2+Math.random()*3)+'s';
+    document.body.appendChild(star);
+}
 
-    // "No" button runs away
-    noBtn.addEventListener('mouseenter', () => {
-        const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-        const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
-        noBtn.style.position = 'absolute';
-        noBtn.style.left = x + 'px';
-        noBtn.style.top = y + 'px';
-    });
+// --- No button dodges ---
+const noBtn=document.getElementById('noBtn');
+noBtn.addEventListener('mouseenter',()=>{
+    const x=Math.random()*(window.innerWidth-noBtn.offsetWidth);
+    const y=Math.random()*(window.innerHeight-noBtn.offsetHeight);
+    noBtn.style.position='absolute';
+    noBtn.style.left=x+'px';
+    noBtn.style.top=y+'px';
+});
 
-    // Clicking "Yes" triggers magic
-    yesBtn.addEventListener('click', () => {
-        buttonsDiv.style.display = 'none';
-        gifContainer.innerHTML = '<img src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif" alt="Kitten Kiss">';
-        document.querySelector('h1').textContent = "Yay! 💖 I'm yours!";
-        launchHearts();
-        launchConfetti();
-        launchRoses();
-        launchSparkles();
-        playMusic();
-    });
+// --- Page navigation ---
+function nextPage(num){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById('page'+num).classList.add('active');
+    // Clean GIF container when moving to messages page
+    if(num==2){ document.getElementById('gifContainer').innerHTML=''; }
+}
 
-    // Floating hearts
-    function launchHearts() {
-        for (let i = 0; i < 30; i++) {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            heart.style.left = Math.random() * window.innerWidth + 'px';
-            heart.style.fontSize = 15 + Math.random() * 25 + 'px';
-            heart.style.animationDuration = 3 + Math.random() * 3 + 's';
-            heart.textContent = '💖';
-            body.appendChild(heart);
-            setTimeout(() => heart.remove(), 5000);
-        }
-    }
+// --- Yes button click ---
+const yesBtn = document.getElementById('yesBtn');
+const gifContainer = document.getElementById('gifContainer');
+const body = document.body;
 
-    // Confetti
-    function launchConfetti() {
-        for (let i = 0; i < 50; i++) {
-            const confetti = document.createElement('div');
-            confetti.classList.add('confetti');
-            confetti.style.left = Math.random() * window.innerWidth + 'px';
-            confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 70%)`;
-            confetti.style.animationDuration = 2 + Math.random() * 2 + 's';
-            body.appendChild(confetti);
-            setTimeout(() => confetti.remove(), 2000);
-        }
-    }
+yesBtn.addEventListener('click', ()=>{
+    document.getElementById('buttons').style.display='none';
+    // New cute GIF
+    gifContainer.innerHTML = `
 
-    // Floating roses
-    function launchRoses() {
-        for (let i = 0; i < 20; i++) {
-            const rose = document.createElement('div');
-            rose.classList.add('rose');
-            rose.style.left = Math.random() * window.innerWidth + 'px';
-            rose.style.fontSize = 20 + Math.random() * 20 + 'px';
-            rose.textContent = '🌹';
-            rose.style.animationDuration = 4 + Math.random() * 3 + 's';
-            body.appendChild(rose);
-            setTimeout(() => rose.remove(), 6000);
-        }
-    }
+        <img src="https://media.giphy.com/media/3oz8xQQP4ahKiyuxHy/giphy.gif" 
+             alt="Cute Kitten Kiss" 
+             style="width:300px; border-radius:15px; box-shadow:0 0 30px rgba(255,20,147,0.5);">
+    `;
+    document.querySelector('#page1 h1').textContent="Yay! 💖 I'm yours!";
+    playMusic();
+    setTimeout(()=>nextPage(2),4000);
+});
 
-    // Sparkles
-    function launchSparkles() {
-        for (let i = 0; i < 40; i++) {
-            const sparkle = document.createElement('div');
-            sparkle.classList.add('sparkle');
-            sparkle.style.left = Math.random() * window.innerWidth + 'px';
-            sparkle.style.top = Math.random() * window.innerHeight + 'px';
-            sparkle.textContent = '✨';
-            body.appendChild(sparkle);
-            setTimeout(() => sparkle.remove(), 3000);
-        }
-    }
+// --- Sweet messages ---
+const messages=["You make my heart melt! 💖","I love your smile! 😘","You are my everything! 🐰","Every moment with you is magical! 🌸","You complete me 💕"];
+function showRandomMessage(){
+    const msg = messages[Math.floor(Math.random()*messages.length)];
+    document.getElementById('loveMessage').textContent = msg;
+}
 
-    // Optional: play romantic music
-    function playMusic() {
-        const audio = new Audio('https://www.bensound.com/bensound-music/bensound-romantic.mp3');
-        audio.play();
-    }
+// --- Music ---
+function playMusic(){
+    const audio = new Audio('https://www.bensound.com/bensound-music/bensound-romantic.mp3');
+    audio.play();
+}
 </script>
+
 </body>
 </html>
