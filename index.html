@@ -5,40 +5,46 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Valentine Surprise 💖</title>
 <style>
+    /* Body and background */
     body {
         margin: 0;
         padding: 0;
-        font-family: 'Arial', sans-serif;
-        background: linear-gradient(to right, #ff9a9e, #fad0c4);
+        font-family: 'Comic Sans MS', cursive, sans-serif;
+        background: linear-gradient(to bottom right, #ff9a9e, #fad0c4, #ffd1dc);
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         height: 100vh;
+        overflow: hidden;
+        cursor: url('https://i.postimg.cc/yxV7qX2V/heart-cursor.png'), auto;
         text-align: center;
         color: #fff;
-        overflow: hidden;
     }
 
     h1 {
-        font-size: 2.5em;
+        font-size: 3em;
         margin-bottom: 50px;
-        text-shadow: 2px 2px #ff69b4;
+        text-shadow: 2px 2px 5px #ff69b4;
+        animation: fadeIn 2s ease forwards;
     }
 
     .button-container {
         display: flex;
-        gap: 50px; /* space between buttons */
+        gap: 50px;
+        z-index: 10;
     }
 
     button {
-        padding: 15px 30px;
-        font-size: 1.2em;
+        padding: 18px 35px;
+        font-size: 1.4em;
         border: none;
-        border-radius: 10px;
+        border-radius: 15px;
         cursor: pointer;
         transition: all 0.3s ease;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+        position: relative;
+        z-index: 10;
     }
 
     #yesBtn {
@@ -46,27 +52,102 @@
         color: white;
     }
 
+    #yesBtn:hover {
+        transform: scale(1.2) rotate(-5deg);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+    }
+
     #noBtn {
         background-color: #fff;
         color: #ff69b4;
-        position: relative;
-    }
-
-    #yesBtn:hover {
-        transform: scale(1.1);
     }
 
     #gifContainer {
         margin-top: 50px;
+        z-index: 10;
     }
 
     img {
-        width: 250px;
+        width: 280px;
         height: auto;
+        animation: fadeIn 1s ease forwards;
+    }
+
+    /* Floating hearts and sparkles */
+    .heart, .sparkle, .rose {
+        position: absolute;
+        pointer-events: none;
+    }
+
+    .heart {
+        font-size: 20px;
+        color: #ff69b4;
+        animation: floatUp 5s linear infinite;
+    }
+
+    .sparkle {
+        font-size: 15px;
+        color: #fff;
+        animation: sparkleAnim 3s linear infinite;
+    }
+
+    .rose {
+        font-size: 25px;
+        animation: floatUp 6s linear infinite;
+    }
+
+    @keyframes floatUp {
+        0% { transform: translateY(0) scale(1); opacity: 1; }
+        100% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
+    }
+
+    @keyframes sparkleAnim {
+        0%, 100% { opacity: 0; transform: scale(0); }
+        50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: scale(0.8); }
+        to { opacity: 1; transform: scale(1); }
+    }
+
+    /* Confetti */
+    .confetti {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        pointer-events: none;
+        animation: confettiFall 2s linear forwards;
+    }
+
+    @keyframes confettiFall {
+        0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+        100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* Optional: background glow */
+    .glow {
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(circle, rgba(255,105,180,0.5) 0%, rgba(255,105,180,0) 70%);
+        border-radius: 50%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        animation: pulse 3s infinite;
+        z-index: 0;
+    }
+
+    @keyframes pulse {
+        0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+        50% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.8; }
     }
 </style>
 </head>
 <body>
+    <div class="glow"></div>
     <h1>Will you be my Valentine, Param? 💌</h1>
     <div class="button-container" id="buttons">
         <button id="yesBtn">Yes 💖</button>
@@ -79,8 +160,9 @@
     const yesBtn = document.getElementById('yesBtn');
     const gifContainer = document.getElementById('gifContainer');
     const buttonsDiv = document.getElementById('buttons');
+    const body = document.body;
 
-    // Make the "No" button run away
+    // "No" button runs away
     noBtn.addEventListener('mouseenter', () => {
         const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
         const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
@@ -89,12 +171,77 @@
         noBtn.style.top = y + 'px';
     });
 
-    // Clicking "Yes" shows GIF and hides buttons
+    // Clicking "Yes" triggers magic
     yesBtn.addEventListener('click', () => {
-        buttonsDiv.style.display = 'none'; // hide buttons
+        buttonsDiv.style.display = 'none';
         gifContainer.innerHTML = '<img src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif" alt="Kitten Kiss">';
         document.querySelector('h1').textContent = "Yay! 💖 I'm yours!";
+        launchHearts();
+        launchConfetti();
+        launchRoses();
+        launchSparkles();
+        playMusic();
     });
+
+    // Floating hearts
+    function launchHearts() {
+        for (let i = 0; i < 30; i++) {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.style.left = Math.random() * window.innerWidth + 'px';
+            heart.style.fontSize = 15 + Math.random() * 25 + 'px';
+            heart.style.animationDuration = 3 + Math.random() * 3 + 's';
+            heart.textContent = '💖';
+            body.appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }
+    }
+
+    // Confetti
+    function launchConfetti() {
+        for (let i = 0; i < 50; i++) {
+            const confetti = document.createElement('div');
+            confetti.classList.add('confetti');
+            confetti.style.left = Math.random() * window.innerWidth + 'px';
+            confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 70%)`;
+            confetti.style.animationDuration = 2 + Math.random() * 2 + 's';
+            body.appendChild(confetti);
+            setTimeout(() => confetti.remove(), 2000);
+        }
+    }
+
+    // Floating roses
+    function launchRoses() {
+        for (let i = 0; i < 20; i++) {
+            const rose = document.createElement('div');
+            rose.classList.add('rose');
+            rose.style.left = Math.random() * window.innerWidth + 'px';
+            rose.style.fontSize = 20 + Math.random() * 20 + 'px';
+            rose.textContent = '🌹';
+            rose.style.animationDuration = 4 + Math.random() * 3 + 's';
+            body.appendChild(rose);
+            setTimeout(() => rose.remove(), 6000);
+        }
+    }
+
+    // Sparkles
+    function launchSparkles() {
+        for (let i = 0; i < 40; i++) {
+            const sparkle = document.createElement('div');
+            sparkle.classList.add('sparkle');
+            sparkle.style.left = Math.random() * window.innerWidth + 'px';
+            sparkle.style.top = Math.random() * window.innerHeight + 'px';
+            sparkle.textContent = '✨';
+            body.appendChild(sparkle);
+            setTimeout(() => sparkle.remove(), 3000);
+        }
+    }
+
+    // Optional: play romantic music
+    function playMusic() {
+        const audio = new Audio('https://www.bensound.com/bensound-music/bensound-romantic.mp3');
+        audio.play();
+    }
 </script>
 </body>
 </html>
